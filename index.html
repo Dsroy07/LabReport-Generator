@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Laboratory Report Generator</title>
+  <meta name="description" content="Enter laboratory results and generate a two-page A4 report. Out-of-range values are shown in bold." />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/form.css" />
+  <link rel="stylesheet" href="css/preview.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <h1>Laboratory Report Generator</h1>
+        <p>Patient entry, live A4 preview, two-page PDF. Out-of-range results print in bold.</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn" id="btn-settings">Settings</button>
+        <button type="button" class="btn btn-ghost" id="btn-demo" title="Test data only">Load demo</button>
+        <button type="button" class="btn btn-ghost" id="btn-demo-oor" title="Test data only">Load out-of-range demo</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel form-panel" aria-label="Data entry">
+        <form id="form-root" autocomplete="off"></form>
+      </section>
+      <section class="panel preview-panel" aria-label="Report preview">
+        <div class="preview-stage" id="preview-root"></div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p class="status" id="status" hidden></p>
+      <div class="footer-actions">
+        <button type="button" class="btn" id="btn-new">New Report</button>
+        <button type="button" class="btn" id="btn-draft">Save Draft</button>
+        <button type="button" class="btn" id="btn-clear">Clear</button>
+        <button type="button" class="btn" id="btn-print">Print Report</button>
+        <button type="button" class="btn btn-primary" id="btn-pdf">Generate PDF</button>
+      </div>
+    </footer>
+  </div>
+
+  <dialog class="modal" id="settings-dialog" aria-labelledby="settings-title">
+    <form class="modal-body" id="settings-form">
+      <h2 id="settings-title">Laboratory Settings</h2>
+      <p class="help">
+        These values appear on every report. Reference ranges are printed in the PDF.
+        A result is bold only when it is numerically below the minimum or above the maximum.
+        This is not a diagnosis.
+      </p>
+
+      <div class="settings-grid">
+        <label class="field">Laboratory name <input name="laboratoryName" /></label>
+        <label class="field">Report title <input name="reportTitle" /></label>
+        <label class="field">Address <input name="address" /></label>
+        <label class="field">Phone <input name="phone" /></label>
+        <label class="field">Email <input name="email" type="email" /></label>
+        <label class="field">Doctor 1 name <input name="doctor1Name" /></label>
+        <label class="field">Doctor 1 qualification <input name="doctor1Qual" /></label>
+        <label class="field">Doctor 2 name <input name="doctor2Name" /></label>
+        <label class="field">Doctor 2 qualification <input name="doctor2Qual" /></label>
+        <label class="field">Logo <input name="logo" type="file" accept="image/*" /></label>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn" id="btn-clear-logo">Remove logo</button>
+      </div>
+
+      <h3>Reference ranges</h3>
+      <p class="help">Edit the intervals used on the report. Sex-specific values are used when Sex is Male or Female on the form. Sex is not printed on the PDF.</p>
+      <div id="range-settings"></div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn" id="btn-reset-settings">Restore defaults</button>
+        <button type="button" class="btn" id="btn-settings-close">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save settings</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="confirm-dialog" aria-labelledby="confirm-title">
+    <div class="modal-body">
+      <h2 id="confirm-title">Confirm</h2>
+      <p id="confirm-message"></p>
+      <div class="confirm-actions">
+        <button type="button" class="btn" id="confirm-cancel">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

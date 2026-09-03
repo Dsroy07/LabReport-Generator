@@ -1,0 +1,16 @@
+:root {
+  --bg: #e7edf2;
+  --surface: #ffffff;
+  --ink: #1b2430;
+  --muted: #5d6b7a;
+  --line: #d3dde6;
+  --accent: #1d4f78;
+  --accent-dark: #143652;
+  --ok: #1f6b45;
+  --oor: #111111;
+  --oor-form: #8a1f1f;
+  --shadow: 0 10px 30px rgb(20 40 60 / 0.08);
+  --radius: 12px;
+  --sans: "Segoe UI", "Calibri", system-ui, sans-serif;
+  --report: "Calibri", "Segoe UI", Arial, sans-serif;
+}

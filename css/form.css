@@ -1,0 +1,114 @@
+.form-panel {
+  position: sticky;
+  top: 12px;
+  max-height: calc(100vh - 140px);
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+
+.card summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 12px 16px;
+  list-style: none;
+}
+
+.card summary::-webkit-details-marker {
+  display: none;
+}
+
+.card-body {
+  padding: 0 16px 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.field {
+  display: grid;
+  gap: 4px;
+  font-size: 0.92rem;
+}
+
+.field-label {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.field-num {
+  color: var(--muted);
+  margin-right: 6px;
+}
+
+.field-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: #fff;
+}
+
+.field input.is-oor {
+  font-weight: 700;
+  border-color: #c98989;
+}
+
+.field-unit,
+.field-hint,
+.field-range {
+  color: var(--muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.field-range {
+  font-variant-numeric: tabular-nums;
+}
+
+.cluster {
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 8px 10px 12px;
+}
+
+.cluster legend {
+  font-weight: 700;
+  padding: 0 6px;
+}
+
+.cluster-diff .cluster-grid {
+  grid-template-columns: repeat(5, minmax(70px, 1fr));
+}
+
+.subhead {
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  color: var(--accent-dark);
+}
+
+@media (max-width: 700px) {
+  .form-panel {
+    position: static;
+    max-height: none;
+  }
+
+  .cluster-diff .cluster-grid {
+    grid-template-columns: repeat(2, minmax(70px, 1fr));
+  }
+}
