@@ -1,5 +1,6 @@
 import { escapeHtml, getPath } from "./utils.js";
 import { evaluateResult } from "./ranges.js";
+import { enabledCustomSections, enabledTests } from "./catalog.js";
 import {
   DATALISTS,
   FORM_SECTIONS,
@@ -13,13 +14,13 @@ function fieldId(path) {
 
 function rangeHint(rangeKey, sex, settings) {
   if (!rangeKey) return "";
-  const evaluation = evaluateResult("", rangeKey, sex, settings.referenceRanges);
+  const evaluation = evaluateResult("", rangeKey, sex, settings.referenceRanges, settings.customSections);
   return evaluation.rangeText;
 }
 
 function oorClass(value, rangeKey, sex, settings) {
   if (!rangeKey) return "";
-  const evaluation = evaluateResult(value, rangeKey, sex, settings.referenceRanges);
+  const evaluation = evaluateResult(value, rangeKey, sex, settings.referenceRanges, settings.customSections);
   return evaluation.outOfRange ? "is-oor" : "";
 }
 
@@ -136,7 +137,8 @@ export function renderForm(root, report, settings) {
     }
   ];
 
-  const patientFields = patient.fields.map((field) => renderInput(field, report, settings)).join("");
+  const extras = extraPatientFields(settings);
+  const patientFields = [...patient.fields, ...extras].map((field) => renderInput(field, report, settings)).join("");
   const sections = rest
     .map((section) => {
       const body = section.layout.map((row) => renderLayoutRow(row, report, settings)).join("");
@@ -156,6 +158,60 @@ export function renderForm(root, report, settings) {
       <div class="card-body patient-grid">${patientFields}</div>
     </details>
     ${sections}
+    ${renderCustomSections(report, settings)}
+    ${settings.features?.showRemarks ? renderRemarks(report) : ""}
+  `;
+}
+
+function extraPatientFields(settings) {
+  const features = settings.features || {};
+  const extra = [];
+  if (features.showOpdNo) extra.push({ path: "patient.opdNo", label: "OPD / Reg. No.", type: "text" });
+  if (features.showReferringDoctor) extra.push({ path: "patient.referringDoctor", label: "Referring doctor", type: "text" });
+  if (features.showSampleDate) extra.push({ path: "patient.sampleDate", label: "Sample date", type: "date" });
+  return extra;
+}
+
+function renderCustomSections(report, settings) {
+  return enabledCustomSections(settings)
+    .map((section) => {
+      const tests = enabledTests(section)
+        .map((item) =>
+          renderInput(
+            {
+              path: `custom.${item.id}`,
+              label: item.label,
+              unit: item.unit,
+              type: "text",
+              rangeKey: `custom:${item.id}`
+            },
+            report,
+            settings
+          )
+        )
+        .join("");
+      return `
+        <details class="card" id="section-${escapeHtml(section.id)}" open>
+          <summary>${escapeHtml(section.title)}</summary>
+          <div class="card-body">${tests}</div>
+        </details>
+      `;
+    })
+    .join("");
+}
+
+function renderRemarks(report) {
+  const value = escapeHtml(report.patient?.remarks || "");
+  return `
+    <details class="card" id="section-remarks" open>
+      <summary>Remarks</summary>
+      <div class="card-body">
+        <label class="field" for="field-patient-remarks">
+          <span class="field-label">Remarks</span>
+          <textarea id="field-patient-remarks" data-path="patient.remarks" rows="3">${value}</textarea>
+        </label>
+      </div>
+    </details>
   `;
 }
 

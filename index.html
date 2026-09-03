@@ -56,22 +56,44 @@
       </p>
 
       <div class="settings-grid">
-        <label class="field">Laboratory name <input name="laboratoryName" /></label>
+        <label class="field">Health Center Name <input name="laboratoryName" /></label>
         <label class="field">Report title <input name="reportTitle" /></label>
         <label class="field">Address <input name="address" /></label>
         <label class="field">Phone <input name="phone" /></label>
         <label class="field">Email <input name="email" type="email" /></label>
         <label class="field">Doctor 1 name <input name="doctor1Name" /></label>
         <label class="field">Doctor 1 qualification <input name="doctor1Qual" /></label>
+        <label class="field">Doctor 1 registration no. <input name="doctor1Reg" /></label>
         <label class="field">Doctor 2 name <input name="doctor2Name" /></label>
         <label class="field">Doctor 2 qualification <input name="doctor2Qual" /></label>
+        <label class="field">Doctor 2 registration no. <input name="doctor2Reg" /></label>
         <label class="field">Logo <input name="logo" type="file" accept="image/*" /></label>
       </div>
+      <fieldset class="feature-flags">
+        <legend>Show on the report</legend>
+        <p class="help">The front form stays the original report until these boxes are checked.</p>
+        <label class="check"><input type="checkbox" name="showHealthCenter" /> Show Health Center Name</label>
+        <label class="check"><input type="checkbox" name="showDoctorRegNo" /> Show doctor registration numbers</label>
+        <label class="check"><input type="checkbox" name="showOpdNo" /> Show OPD / Reg. No.</label>
+        <label class="check"><input type="checkbox" name="showReferringDoctor" /> Show referring doctor</label>
+        <label class="check"><input type="checkbox" name="showSampleDate" /> Show sample date</label>
+        <label class="check"><input type="checkbox" name="showRemarks" /> Show remarks</label>
+      </fieldset>
       <div class="modal-actions">
         <button type="button" class="btn" id="btn-clear-logo">Remove logo</button>
       </div>
 
-      <h3>Reference ranges</h3>
+      <h3>Extra tests and sections</h3>
+      <p class="help">Add sections here. They stay hidden on the form and PDF until <strong>Show this section</strong> is checked.</p>
+      <div class="preset-row">
+        <button type="button" class="btn" data-preset="lft">Add LFT preset</button>
+        <button type="button" class="btn" data-preset="lipid">Add Lipid preset</button>
+        <button type="button" class="btn" data-preset="thyroid">Add Thyroid preset</button>
+        <button type="button" class="btn" id="btn-add-section">Add empty section</button>
+      </div>
+      <div id="catalog-root"></div>
+
+      <h3>Built-in reference ranges</h3>
       <p class="help">Edit the intervals used on the report. Sex-specific values are used when Sex is Male or Female on the form. Sex is not printed on the PDF.</p>
       <div id="range-settings"></div>
 

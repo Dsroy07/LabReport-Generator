@@ -128,6 +128,96 @@ summary:focus-visible {
   margin-top: 0;
 }
 
+.feature-flags,
+.catalog-section {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 12px 0;
+}
+
+.feature-flags {
+  display: grid;
+  gap: 6px;
+}
+
+.check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.92rem;
+}
+
+.preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.catalog-section h4 {
+  margin: 0 0 8px;
+}
+
+.catalog-toolbar,
+.catalog-test {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.catalog-test {
+  grid-template-columns: 1.4fr 0.7fr 90px 80px 80px auto;
+  align-items: end;
+}
+
+.catalog-test input,
+.catalog-section input[type="text"] {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 4px 8px;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  min-height: 72px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.patient-extra {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.health-center {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.doc-reg {
+  font-size: 10px;
+  color: #444;
+}
+
+.remarks-block {
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .catalog-test {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .settings-grid,
 .patient-grid,
 .cluster-grid {

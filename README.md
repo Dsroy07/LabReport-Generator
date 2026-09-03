@@ -33,11 +33,14 @@ npx --yes serve .
 
 ## Laboratory settings
 
-Open **Settings** to edit:
+Open **Settings** to edit letterhead, ranges, and extras. The main form stays the original two-page report until you check **Show on the report**.
 
-- Doctor names and qualifications
-- Laboratory name, title, address, phone, email, logo
-- Per-test reference ranges (min, max, optional display text, male/female intervals)
+- Health Center Name (shown only if its checkbox is on)
+- Doctor names, qualifications, and registration numbers (Reg. No. prints only if that checkbox is on)
+- Address, phone, email, logo
+- Built-in reference ranges
+- Extra sections and tests (LFT / Lipid / Thyroid presets, or your own). Each section has **Show this section on the report**. Unchecked sections do not appear on the form or PDF.
+- Optional patient fields: OPD / Reg. No., referring doctor, sample date, remarks — each behind a checkbox
 
 Settings are stored in `localStorage` under `labReportSettings`.
 

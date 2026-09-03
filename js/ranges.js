@@ -1,4 +1,5 @@
 import { isBlank, trimValue } from "./utils.js";
+import { findCustomTest } from "./catalog.js";
 
 export const DEFAULT_REFERENCE_RANGES = {
   hb: {
@@ -388,7 +389,40 @@ export function isOutOfRange(rawValue, range) {
   return belowMin(canonical, range.min) || aboveMax(canonical, range.max);
 }
 
-export function evaluateResult(rawValue, rangeKey, sex, overrides) {
+export function customTestToRange(test, sex) {
+  if (!test) return null;
+  return resolveRange(
+    "custom",
+    sex,
+    {
+      custom: {
+        label: test.label,
+        unit: test.unit || "",
+        type: test.type === "text" ? "qualitative" : "numeric",
+        min: test.min,
+        max: test.max,
+        display: test.display || "",
+        male: test.male,
+        female: test.female
+      }
+    }
+  );
+}
+
+export function evaluateResult(rawValue, rangeKey, sex, overrides, customSections) {
+  if (rangeKey && String(rangeKey).startsWith("custom:")) {
+    const test = findCustomTest(customSections, String(rangeKey).slice(7));
+    if (!test || test.enabled === false) {
+      return { range: null, rangeText: "", unit: "", outOfRange: false };
+    }
+    const range = customTestToRange(test, sex);
+    return {
+      range,
+      rangeText: formatRangeText(range),
+      unit: range?.unit || test.unit || "",
+      outOfRange: isOutOfRange(rawValue, range)
+    };
+  }
   const range = resolveRange(rangeKey, sex, overrides);
   if (!range) {
     return {

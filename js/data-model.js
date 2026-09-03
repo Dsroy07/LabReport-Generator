@@ -6,7 +6,11 @@ export function createEmptyReport() {
       name: "",
       age: "",
       sex: "",
-      date: todayISO()
+      date: todayISO(),
+      opdNo: "",
+      referringDoctor: "",
+      sampleDate: "",
+      remarks: ""
     },
     hematology: {
       hb: "",
@@ -62,7 +66,8 @@ export function createEmptyReport() {
         miscellaneous: "",
         parasites: ""
       }
-    }
+    },
+    custom: {}
   };
 }
 
@@ -89,6 +94,12 @@ export function normalizeReport(report) {
   mergeDefined(merged, source);
   const normalized = normalizeTree(merged);
   if (isBlank(normalized.patient.date)) normalized.patient.date = todayISO();
+  const customSource = source.custom && typeof source.custom === "object" ? source.custom : {};
+  const custom = {};
+  for (const [key, value] of Object.entries(customSource)) {
+    custom[key] = normalizeValue(value);
+  }
+  normalized.custom = custom;
   return normalized;
 }
 
