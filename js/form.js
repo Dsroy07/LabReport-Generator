@@ -1,6 +1,7 @@
 import { escapeHtml, getPath } from "./utils.js";
 import { evaluateResult } from "./ranges.js";
 import { enabledCustomSections, enabledTests } from "./catalog.js";
+import { resolveKeyboard, keyboardAttributeString } from "./keyboard.js";
 import {
   DATALISTS,
   FORM_SECTIONS,
@@ -40,7 +41,7 @@ function renderInput(field, report, settings) {
   const required = field.required ? "required" : "";
   const list = field.list ? `list="${escapeHtml(field.list)}"` : "";
   const type = field.type === "date" ? "date" : "text";
-  const inputMode = field.type === "date" ? "" : 'inputmode="decimal"';
+  const inputMode = keyboardAttributeString(resolveKeyboard(field, settings));
   const cls = oorClass(value, field.rangeKey, sex, settings);
   const hint = field.hint || (field.unit ? field.unit : "");
   const range = rangeHint(field.rangeKey, sex, settings);
@@ -166,8 +167,8 @@ export function renderForm(root, report, settings) {
 function extraPatientFields(settings) {
   const features = settings.features || {};
   const extra = [];
-  if (features.showOpdNo) extra.push({ path: "patient.opdNo", label: "OPD / Reg. No.", type: "text" });
-  if (features.showReferringDoctor) extra.push({ path: "patient.referringDoctor", label: "Referring doctor", type: "text" });
+  if (features.showOpdNo) extra.push({ path: "patient.opdNo", label: "OPD / Reg. No.", type: "text", keyboard: "full" });
+  if (features.showReferringDoctor) extra.push({ path: "patient.referringDoctor", label: "Referring doctor", type: "text", keyboard: "letters" });
   if (features.showSampleDate) extra.push({ path: "patient.sampleDate", label: "Sample date", type: "date" });
   return extra;
 }
@@ -208,7 +209,7 @@ function renderRemarks(report) {
       <div class="card-body">
         <label class="field" for="field-patient-remarks">
           <span class="field-label">Remarks</span>
-          <textarea id="field-patient-remarks" data-path="patient.remarks" rows="3">${value}</textarea>
+          <textarea id="field-patient-remarks" data-path="patient.remarks" rows="3" inputmode="text" autocapitalize="sentences" spellcheck="true">${value}</textarea>
         </label>
       </div>
     </details>

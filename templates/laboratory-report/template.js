@@ -3,8 +3,8 @@ import { TEMPLATE_META } from "./layout.js";
 export { TEMPLATE_META };
 
 export const PATIENT_FIELDS = [
-  { path: "patient.name", label: "Patient Name", required: true, type: "text", autocomplete: "name" },
-  { path: "patient.age", label: "Age", type: "text", hint: "Years" },
+  { path: "patient.name", label: "Patient Name", required: true, type: "text", autocomplete: "name", keyboard: "letters" },
+  { path: "patient.age", label: "Age", type: "text", hint: "Years", keyboard: "decimal" },
   { path: "patient.sex", label: "Sex", type: "select", options: ["", "Male", "Female", "Other"], hint: "Used for reference ranges; not printed on the PDF" },
   { path: "patient.date", label: "Report Date", required: true, type: "date" }
 ];

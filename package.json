@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Browser-based laboratory report generator with A4 PDF output",
   "scripts": {
-    "test": "node --test tests/ranges.test.js tests/validation.test.js tests/data-model.test.js tests/pdf-layout.test.js tests/catalog.test.js",
+    "test": "node --test tests/ranges.test.js tests/validation.test.js tests/data-model.test.js tests/pdf-layout.test.js tests/catalog.test.js tests/keyboard.test.js",
     "start": "python -m http.server 8000",
     "pdf:sample": "node scripts/generate-sample-pdf.js"
   },
